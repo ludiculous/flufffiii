@@ -2,6 +2,9 @@ import React,{Component} from 'react';
 import {View,Text,Image,ListView,Dimensions} from 'react-native';
 import {connect} from 'react-redux';
 import {fetchPetsList} from '../actions';
+import Deck from './common/Deck.js'
+import { Card, Button } from 'react-native-elements';
+
 import _ from 'lodash';
 
 const PetsState = {};
@@ -13,6 +16,21 @@ class PetsList extends Component{
         this.props.fetchPetsList();
   }
 
+  renderCard(item){
+    return(
+      <Card
+        key={item}
+        title={item}
+        image = {{uri:item}}
+      >
+  <Text>
+  Lorem Ipsum is always a fun way to dress up your blocks.
+  </Text>
+    </Card>
+  );
+  }
+
+/*
     transformList(){
         const PetsArray = this.props.PetsList
 
@@ -38,21 +56,24 @@ class PetsList extends Component{
 
         )
     }
+    this.transformList();
+    this.createDataSource();
+    */
 
       render(){
-          this.transformList();
-          this.createDataSource();
+
 
         return(
 
-            <ListView
-
-                      enableEmptySections
-                      dataSource={this.dataSource}
-                      renderRow={this.renderRow}
-                >
-
-            </ListView>
+            <View>
+            <Deck
+               data={this.props.PetsList}
+              renderCard={this.renderCard}
+              onSwipeRight={()=>console.log('something was swipped right')}
+              onSwipeRight={()=>console.log('something was swipped left')}
+            />
+        
+           </View>
         )
       }
 }
